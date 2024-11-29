@@ -5,11 +5,13 @@ from PyQt6 import uic
 from PyQt6.QtGui import QPainter, QColor
 from PyQt6.QtWidgets import QMainWindow, QApplication
 
+from UI import Ui_MainWindow
 
-class Example(QMainWindow):
+class Example(QMainWindow, Ui_MainWindow):
     def __init__(self):
-        super().__init__()
-        uic.loadUi('UI.ui', self)
+        super().__init__(parent=None)
+        self.setupUi(self)
+
         self.pushButton.clicked.connect(self.paint)
         self.first_paint = True
 
@@ -26,7 +28,7 @@ class Example(QMainWindow):
         self.update()
 
     def draw_circle(self, qp):
-        qp.setBrush(QColor(255, 255, 0))
+        qp.setBrush(QColor(*[randint(0, 256) for _ in range(3)]))
         x, y = randint(0, 700), randint(0, 600)
         diameter = randint(20, 200)
         qp.drawEllipse(x, y, diameter, diameter)
